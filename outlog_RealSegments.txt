@@ -1,0 +1,40 @@
+globaltag = DES19_62_V8::All
+271 DQMStore::DQMStore 
+HcalTopologyIdealEP::HcalTopologyIdealEP
+19-Mar-2014 20:39:45 CET  Initiating request to open file file:/tmp/dnash/step3_TryWithoutMET.root
+19-Mar-2014 20:39:47 CET  Successfully opened file file:/tmp/dnash/step3_TryWithoutMET.root
+HELLO
+in MuonNumberingInitialization::initializeMuonDDDConstants
+about to make my new muonDDDConst_
+in MuonNumberingInitialization::produce
+Begin processing the 1st record. Run 1, Event 1, LumiSection 1 at 19-Mar-2014 20:40:01.671 CET
+%MSG-e FatalSystemSignal:  ME0SegmentMatcher:me0SegmentMatcher  19-Mar-2014 20:40:06 CET Run: 1 Event: 1
+A fatal system signal has occurred: segmentation violation
+%MSG
+
+
+A fatal system signal has occurred: segmentation violation
+The following is the call stack containing the origin of the signal.
+NOTE:The first few functions on the stack are artifacts of processing the signal and can be ignored
+
+#0  0x00002af7418bf075 in waitpid () from /lib64/libc.so.6
+#1  0x00002af741861741 in do_system () from /lib64/libc.so.6
+#2  0x00002af73f70d44c in TUnixSystem::StackTrace() () from /afs/cern.ch/cms/slc5_amd64_gcc472/cms/cmssw/CMSSW_6_2_0_SLHC8/external/slc5_amd64_gcc472/lib/libCore.so
+#3  0x00002af7451e58b4 in sig_dostack_then_abort () from /afs/cern.ch/cms/slc5_amd64_gcc472/cms/cmssw/CMSSW_6_2_0_SLHC8/lib/slc5_amd64_gcc472/libFWCoreServices.so
+#4  <signal handler called>
+#5  0x00002af75df43699 in ME0SegmentMatcher::produce(edm::Event&, edm::EventSetup const&) () from /afs/cern.ch/work/d/dnash/ME0Segments/ForRealSegmentsOnly/CMSSW_6_2_0_SLHC8/lib/slc5_amd64_gcc472/libRecoMuonMuonIdentification.so
+#6  0x00002af73ded9ee0 in edm::EDProducer::doEvent(edm::EventPrincipal&, edm::EventSetup const&, edm::CurrentProcessingContext const*) () from /afs/cern.ch/cms/slc5_amd64_gcc472/cms/cmssw/CMSSW_6_2_0_SLHC8/lib/slc5_amd64_gcc472/libFWCoreFramework.so
+#7  0x00002af73df81810 in edm::WorkerT<edm::EDProducer>::implDoBegin(edm::EventPrincipal&, edm::EventSetup const&, edm::CurrentProcessingContext const*) () from /afs/cern.ch/cms/slc5_amd64_gcc472/cms/cmssw/CMSSW_6_2_0_SLHC8/lib/slc5_amd64_gcc472/libFWCoreFramework.so
+#8  0x00002af73defe9e5 in bool edm::Worker::doWork<edm::OccurrenceTraits<edm::EventPrincipal, (edm::BranchActionType)0> >(edm::OccurrenceTraits<edm::EventPrincipal, (edm::BranchActionType)0>::MyPrincipal&, edm::EventSetup const&, edm::CurrentProcessingContext const*, edm::CPUTimer*) () from /afs/cern.ch/cms/slc5_amd64_gcc472/cms/cmssw/CMSSW_6_2_0_SLHC8/lib/slc5_amd64_gcc472/libFWCoreFramework.so
+#9  0x00002af73df056b3 in void edm::Path::processOneOccurrence<edm::OccurrenceTraits<edm::EventPrincipal, (edm::BranchActionType)0> >(edm::OccurrenceTraits<edm::EventPrincipal, (edm::BranchActionType)0>::MyPrincipal&, edm::EventSetup const&) () from /afs/cern.ch/cms/slc5_amd64_gcc472/cms/cmssw/CMSSW_6_2_0_SLHC8/lib/slc5_amd64_gcc472/libFWCoreFramework.so
+#10 0x00002af73df05d0e in void edm::Schedule::processOneOccurrence<edm::OccurrenceTraits<edm::EventPrincipal, (edm::BranchActionType)0> >(edm::OccurrenceTraits<edm::EventPrincipal, (edm::BranchActionType)0>::MyPrincipal&, edm::EventSetup const&, bool) () from /afs/cern.ch/cms/slc5_amd64_gcc472/cms/cmssw/CMSSW_6_2_0_SLHC8/lib/slc5_amd64_gcc472/libFWCoreFramework.so
+#11 0x00002af73def32ef in edm::EventProcessor::readAndProcessEvent() () from /afs/cern.ch/cms/slc5_amd64_gcc472/cms/cmssw/CMSSW_6_2_0_SLHC8/lib/slc5_amd64_gcc472/libFWCoreFramework.so
+#12 0x00002af73dedad9a in statemachine::HandleEvent::readAndProcessEvent() () from /afs/cern.ch/cms/slc5_amd64_gcc472/cms/cmssw/CMSSW_6_2_0_SLHC8/lib/slc5_amd64_gcc472/libFWCoreFramework.so
+#13 0x00002af73dedc99a in statemachine::HandleEvent::HandleEvent(boost::statechart::state<statemachine::HandleEvent, statemachine::HandleLumis, boost::mpl::list<mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, (boost::statechart::history_mode)0>::my_context) () from /afs/cern.ch/cms/slc5_amd64_gcc472/cms/cmssw/CMSSW_6_2_0_SLHC8/lib/slc5_amd64_gcc472/libFWCoreFramework.so
+#14 0x00002af73dee2cbc in boost::statechart::state<statemachine::HandleEvent, statemachine::HandleLumis, boost::mpl::list<mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, (boost::statechart::history_mode)0>::shallow_construct(boost::intrusive_ptr<statemachine::HandleLumis> const&, boost::statechart::state_machine<statemachine::Machine, statemachine::Starting, std::allocator<void>, boost::statechart::null_exception_translator>&) () from /afs/cern.ch/cms/slc5_amd64_gcc472/cms/cmssw/CMSSW_6_2_0_SLHC8/lib/slc5_amd64_gcc472/libFWCoreFramework.so
+#15 0x00002af73dee2e56 in boost::statechart::simple_state<statemachine::FirstLumi, statemachine::HandleLumis, boost::mpl::list<mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, (boost::statechart::history_mode)0>::react_impl(boost::statechart::event_base const&, void const*) () from /afs/cern.ch/cms/slc5_amd64_gcc472/cms/cmssw/CMSSW_6_2_0_SLHC8/lib/slc5_amd64_gcc472/libFWCoreFramework.so
+#16 0x00002af73df021ba in boost::statechart::state_machine<statemachine::Machine, statemachine::Starting, std::allocator<void>, boost::statechart::null_exception_translator>::send_event(boost::statechart::event_base const&) () from /afs/cern.ch/cms/slc5_amd64_gcc472/cms/cmssw/CMSSW_6_2_0_SLHC8/lib/slc5_amd64_gcc472/libFWCoreFramework.so
+#17 0x00002af73def6ee3 in edm::EventProcessor::runToCompletion(bool) () from /afs/cern.ch/cms/slc5_amd64_gcc472/cms/cmssw/CMSSW_6_2_0_SLHC8/lib/slc5_amd64_gcc472/libFWCoreFramework.so
+#18 0x0000000000414769 in main ()
+
+A fatal system signal has occurred: segmentation violation

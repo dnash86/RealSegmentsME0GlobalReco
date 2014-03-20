@@ -54,7 +54,6 @@
 <use   name="roothistmatrix"/>
 <use   name="RecoMuon/TrackingTools"/>
 <use   name="DataFormats/CSCRecHit"/>
-<use   name="RecoLocalCalo/HcalRecAlgos"/>
 <export>
   <lib   name="1"/>
 </export>

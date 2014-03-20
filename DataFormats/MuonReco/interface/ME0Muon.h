@@ -23,7 +23,7 @@ namespace reco {
   class ME0Muon {
   public:
     ME0Muon();
-    ME0Muon( const TrackRef & t, const ME0SegmentRef & s) { innerTrack_ = t; me0Segment_ = s;}
+    ME0Muon( const TrackRef & t, const ME0Segment & s) { innerTrack_ = t; me0Segment_ = s;}
     virtual ~ME0Muon(){}     
     
     /// reference to Track reconstructed in the tracker only
@@ -33,9 +33,9 @@ namespace reco {
     virtual void setInnerTrack( const TrackRef & t ) { innerTrack_ = t; }
     virtual void setTrack( const TrackRef & t ) { setInnerTrack(t); }
     /// set reference to our new ME0Segment type
-    virtual void setME0Segment( const ME0SegmentRef & s ) { me0Segment_ = s; }
+    virtual void setME0Segment( const ME0Segment & s ) { me0Segment_ = s; }
 
-    virtual ME0SegmentRef me0segment() const { return me0Segment_; }
+    virtual ME0Segment me0segment() const { return me0Segment_; }
 
     /// a bunch of useful accessors
     int charge() const { return innerTrack_.get()->charge(); }
@@ -59,7 +59,7 @@ namespace reco {
   private:
     /// reference to Track reconstructed in the tracker only
     TrackRef innerTrack_;
-    ME0SegmentRef me0Segment_;
+    ME0Segment me0Segment_;
   };
 
 }

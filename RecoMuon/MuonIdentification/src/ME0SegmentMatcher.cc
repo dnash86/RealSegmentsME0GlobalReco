@@ -51,12 +51,6 @@ void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
     setup.get<TrackingComponentsRecord>().get("SteppingHelixPropagatorAlong", shProp);
 
 
-    std::cout<<"Getting record"<<std::endl;
-  
-    //edm::ESHandle<ME0Geometry> me0Geom;
-    //setup.get<MuonGeometryRecord>().get(me0Geom);
-
-    std::cout<<" record"<<std::endl;
     
     using namespace reco;
 
@@ -78,6 +72,7 @@ void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
     for (std::vector<Track>::const_iterator thisTrack = generalTracks->begin();
 	 thisTrack != generalTracks->end(); ++thisTrack,++TrackNumber){
       //Initializing our plane
+      //std::cout<<"On track "<<TrackNumber<<std::endl;
       float zSign  = thisTrack->pz()/fabs(thisTrack->pz());
       float zValue = 560. * zSign;
       Plane *plane = new Plane(Surface::PositionType(0,0,zValue),Surface::RotationType());
@@ -115,12 +110,16 @@ void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
       int SegmentNumber = 0;
       // for (std::vector<ME0Segment>::const_iterator thisSegment = OurSegments->begin();
       // 	   thisSegment != OurSegments->end(); ++thisSegment,++SegmentNumber){
+      //std::cout<<"OurSegments = "<<OurSegments->size()<<std::endl;
       for (auto thisSegment = OurSegments->begin(); thisSegment != OurSegments->end(); 
 	   ++thisSegment,++SegmentNumber){
+	//std::cout<<"On Segment "<<SegmentNumber<<std::endl;
 	ME0DetId id = thisSegment->me0DetId();
+	//std::cout<<"ME0DetId =  "<<id<<std::endl;
 	auto roll = me0Geom->etaPartition(id); 
 	
-	std::cout <<"Global Segment Position "<<  roll->toGlobal(thisSegment->localPosition())<<std::endl;
+	// std::cout <<"Global Segment Position = "<<  roll->toGlobal(thisSegment->localPosition())<<std::endl;
+	// std::cout <<"Global Segment Direction = "<<  roll->toGlobal(thisSegment->localDirection())<<std::endl;
 	
 	GlobalPoint thisPosition(roll->toGlobal(thisSegment->localPosition()));
 	GlobalVector thisDirection(thisSegment->localDirection().x(),thisSegment->localDirection().y(),thisSegment->localDirection().z());
@@ -189,8 +188,9 @@ void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
 	if (R_MatchFound && Phi_MatchFound) {
 	  //std::cout<<"FOUND ONE"<<std::endl;             
 	  TrackRef thisTrackRef(generalTracks,TrackNumber);
-	  ME0SegmentRef thisME0SegmentRef(OurSegments,SegmentNumber);
-	  TempStore.push_back(reco::ME0Muon(thisTrackRef,thisME0SegmentRef));
+	  //ME0SegmentRef thisME0SegmentRef(OurSegments,thisSegment->me0DetId());
+	  //TempStore.push_back(reco::ME0Muon(thisTrackRef,*(&*thisSegment)));
+	  TempStore.push_back(reco::ME0Muon(thisTrackRef,(*thisSegment)));
 	  TkIndex.push_back(TrackNumber);
 	}
       }
@@ -214,11 +214,11 @@ void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
 	int thisMuonNumber = TkIndex[ComparisonIndex];    //The track number of the muon we are currently looking at
 	if (thisMuonNumber == ReferenceMuonNumber){        //This means we're looking at one track
 
-	  ME0SegmentRef SegRef = thisMuon->me0segment();
+	  ME0Segment Seg = thisMuon->me0segment();
 	  TrackRef TkRef = thisMuon->innerTrack();
 	  //Here LocalPoint is used, although the local frame and global frame coincide, hence all calculations are made in global coordinates
 	  //  NOTE: Correct this when making the change to "real" ME0Segments, since these will be in real local coordinates
-	  LocalPoint SegPos(SegRef->localPosition().x(),SegRef->localPosition().y(),SegRef->localPosition().z());
+	  LocalPoint SegPos(Seg.localPosition().x(),Seg.localPosition().y(),Seg.localPosition().z());
 	  //LocalPoint TkPos(TkRef->vx(),TkRef->vy(),TkRef->vz());
 	  LocalPoint TkPos(FinalTrackPosition[thisMuonNumber].x(),FinalTrackPosition[thisMuonNumber].y(),FinalTrackPosition[thisMuonNumber].z());
 	  double delR = reco::deltaR(SegPos,TkPos);
@@ -291,9 +291,9 @@ void ME0SegmentMatcher::getFromFTS(const FreeTrajectoryState& fts,
 
 void ME0SegmentMatcher::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup)
 {
-  std::cout<<"Getting record"<<std::endl;
+  //std::cout<<"Getting record"<<std::endl;
   iSetup.get<MuonGeometryRecord>().get(me0Geom);
-  std::cout<<" record"<<std::endl;
+  //std::cout<<" record"<<std::endl;
 }
 
  DEFINE_FWK_MODULE(ME0SegmentMatcher);
