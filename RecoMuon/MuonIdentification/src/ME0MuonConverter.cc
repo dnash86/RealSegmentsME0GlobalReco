@@ -14,8 +14,7 @@
 
 #include <Geometry/Records/interface/MuonGeometryRecord.h>
 
-#include <DataFormats/MuonReco/interface/EmulatedME0Segment.h>
-#include <DataFormats/MuonReco/interface/EmulatedME0SegmentCollection.h>
+
 
 #include <DataFormats/MuonReco/interface/ME0Muon.h>
 #include <DataFormats/MuonReco/interface/ME0MuonCollection.h>
@@ -44,7 +43,7 @@ ME0MuonConverter::ME0MuonConverter(const edm::ParameterSet& pas) : iev(0) {
   produces<std::vector<reco::RecoChargedCandidate> >();  
 }
 
-ME0MuonConverter::~ME0MuonConverter() {}
+ME0MuonConverter::~ME0MuonConverter() {std::cout<<"Desctructor"<<std::endl;}
 
 void ME0MuonConverter::produce(edm::Event& ev, const edm::EventSetup& setup) {
 
@@ -56,10 +55,10 @@ void ME0MuonConverter::produce(edm::Event& ev, const edm::EventSetup& setup) {
   ev.getByLabel <std::vector<ME0Muon> > ("me0SegmentMatcher", OurMuons);
   
   std::auto_ptr<RecoChargedCandidateCollection> oc( new RecoChargedCandidateCollection());
-
+  std::cout<<"I'm here now"<<std::endl;
   for (std::vector<ME0Muon>::const_iterator thisMuon = OurMuons->begin();
        thisMuon != OurMuons->end(); ++thisMuon){
-
+    std::cout<<"Am I here?"<<std::endl;
     TrackRef tkRef = thisMuon->innerTrack();
     
     Particle::Charge q = tkRef->charge();
@@ -70,11 +69,12 @@ void ME0MuonConverter::produce(edm::Event& ev, const edm::EventSetup& setup) {
     if(abs(q)==1) pid = q < 0 ? 13 : -13;
     reco::RecoChargedCandidate cand(q, p4, vtx, pid);
     cand.setTrack(thisMuon->innerTrack());
-
+    std::cout<<"And am I here?"<<std::endl;
     oc->push_back(cand);
   }
     
   ev.put(oc);
+  std::cout<<"And here?"<<std::endl;
 }
 
 

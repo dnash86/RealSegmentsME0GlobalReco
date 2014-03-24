@@ -185,7 +185,7 @@
     
     <class name="std::vector<reco::ME0Muon>"/>
     <class name="reco::ME0Muon" ClassVersion="14">
-      <version ClassVersion="14" checksum="2582309426"/>
+      <version ClassVersion="14" checksum="13864262"/>
     </class>
     <class name="edm::Wrapper<std::vector<reco::ME0Muon> >"/>
     
@@ -193,4 +193,3 @@
   </selection>
   
 </lcgdict>
-

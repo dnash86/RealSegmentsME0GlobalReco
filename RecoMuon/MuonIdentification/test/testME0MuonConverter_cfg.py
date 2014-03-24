@@ -50,7 +50,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:upgrade2019', '')
 
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1)
+    input = cms.untracked.int32(10)
 )
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring('file:///somewhere/simevent.root') ##/somewhere/simevent.root" }
@@ -65,11 +65,13 @@ process.me0SegmentMatcher = cms.EDProducer("ME0SegmentMatcher"
 process.me0MuonConverter = cms.EDProducer("ME0MuonConverter")
 
 process.p = cms.Path(process.me0SegmentMatcher+
-                     process.me0MuonConverter)
+                     process.me0MuonConverter
+                     )
 
 process.PoolSource.fileNames = [
     #'file:/tmp/dnash/CheckoutAllOfMarcello/CMSSW_6_2_0_SLHC8/src/13000_FourMuPt1_200+FourMuPt_1_200_Extended2023Muon_GenSimFull+DigiFull_Extended2023Muon+RecoFull_Extended2023Muon+HARVESTFull_Extended2023Muon/step3.root'
-    'file:/tmp/dnash/step3_TryWithoutMET.root'
+    #'file:/tmp/dnash/step3_TryWithoutMET.root'
+    'file:/tmp/dnash/step3_trackingfix.root'
 ]
 
 

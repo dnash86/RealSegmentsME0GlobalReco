@@ -33,7 +33,7 @@ ME0SegmentMatcher::ME0SegmentMatcher(const edm::ParameterSet& pas) : iev(0){
 
 }
 
-ME0SegmentMatcher::~ME0SegmentMatcher() {}
+ME0SegmentMatcher::~ME0SegmentMatcher() {std::cout<<"Desctructor"<<std::endl;}
 
 void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
 
@@ -186,11 +186,13 @@ void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
 	}
 
 	if (R_MatchFound && Phi_MatchFound) {
-	  //std::cout<<"FOUND ONE"<<std::endl;             
+	  std::cout<<"FOUND ONE"<<std::endl;             
 	  TrackRef thisTrackRef(generalTracks,TrackNumber);
 	  //ME0SegmentRef thisME0SegmentRef(OurSegments,thisSegment->me0DetId());
 	  //TempStore.push_back(reco::ME0Muon(thisTrackRef,*(&*thisSegment)));
+	  
 	  TempStore.push_back(reco::ME0Muon(thisTrackRef,(*thisSegment)));
+	  std::cout<<"Does it fail here?"<<std::endl;             
 	  TkIndex.push_back(TrackNumber);
 	}
       }
@@ -215,10 +217,13 @@ void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
 	if (thisMuonNumber == ReferenceMuonNumber){        //This means we're looking at one track
 
 	  ME0Segment Seg = thisMuon->me0segment();
+
 	  TrackRef TkRef = thisMuon->innerTrack();
 	  //Here LocalPoint is used, although the local frame and global frame coincide, hence all calculations are made in global coordinates
 	  //  NOTE: Correct this when making the change to "real" ME0Segments, since these will be in real local coordinates
+
 	  LocalPoint SegPos(Seg.localPosition().x(),Seg.localPosition().y(),Seg.localPosition().z());
+
 	  //LocalPoint TkPos(TkRef->vx(),TkRef->vy(),TkRef->vz());
 	  LocalPoint TkPos(FinalTrackPosition[thisMuonNumber].x(),FinalTrackPosition[thisMuonNumber].y(),FinalTrackPosition[thisMuonNumber].z());
 	  double delR = reco::deltaR(SegPos,TkPos);
@@ -234,12 +239,15 @@ void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
 
     for (unsigned int i = 0; i < TkToKeep.size(); ++i){
       int thisKeepIndex = TkToKeep[i];
+
       oc->push_back(TempStore[thisKeepIndex]);    //Filling the collection
+
     }
   	
     // put collection in event
+    std::cout<<"Is it fail here?"<<std::endl;             
     ev.put(oc);
-
+    std::cout<<"What about here?"<<std::endl;             
 }
 
 FreeTrajectoryState
