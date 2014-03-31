@@ -46,7 +46,8 @@ process.PoolSource.fileNames = [
     #'file:/tmp/dnash/step3_copied.root',
     #'file:/tmp/dnash/FourMu_5kevts_output.root'
     #'file:/tmp/dnash/step3_TryWithoutMET.root'
-    'file:/tmp/dnash/TestRealSegments.root'
+    'file:/tmp/dnash/step3_trackingfix.root'
+    #'file:/tmp/dnash/RunOnstep3_TryWithoutMET_WithRealSegments.root'
     #'file:/tmp/dnash/step3_Post130.root',
     #'file:/tmp/dnash/step3_Post262.root',
     #'file:/tmp/dnash/step3_Post600.root'

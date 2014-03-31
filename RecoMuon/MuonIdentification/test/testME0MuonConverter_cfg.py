@@ -50,7 +50,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:upgrade2019', '')
 
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(10)
+    input = cms.untracked.int32(-1)
 )
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring('file:///somewhere/simevent.root') ##/somewhere/simevent.root" }
@@ -78,7 +78,8 @@ process.PoolSource.fileNames = [
 process.o1 = cms.OutputModule("PoolOutputModule",
     outputCommands = cms.untracked.vstring('keep *'),
 #                              process.AODSIMEventContent,
-                              fileName = cms.untracked.string('/tmp/dnash/RunOnstep3_TryWithoutMET_WithRealSegments.root')
-)
+                              fileName = cms.untracked.string('/tmp/dnash/TestingRealSegments.root'
+                                                              )
+                              )
 
 process.outpath = cms.EndPath(process.o1)

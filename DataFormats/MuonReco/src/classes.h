@@ -25,9 +25,12 @@
 #include "DataFormats/Common/interface/AssociationMap.h"
 
 #include <DataFormats/MuonReco/interface/EmulatedME0Segment.h>
-#include <DataFormats/MuonReco/interface/ME0Muon.h>
+#include <DataFormats/MuonReco/interface/RealME0Muon.h>
 
 #include <DataFormats/MuonReco/interface/EmulatedME0SegmentCollection.h>
+#include <DataFormats/MuonReco/interface/RealME0MuonCollection.h>
+
+#include <DataFormats/MuonReco/interface/ME0Muon.h>
 #include <DataFormats/MuonReco/interface/ME0MuonCollection.h>
 
 #include <vector>
@@ -145,6 +148,15 @@ namespace {
     ME0MuonCollection muoncol;
     edm::Wrapper<ME0MuonCollection> mcw1;
     edm::Ref<ME0MuonCollection> mcr1;
+
+    //r = "real"
+    reco::RealME0Muon rmuon;
+    std::vector<reco::RealME0Muon> rmuons;
+    edm::Wrapper< std::vector<reco::RealME0Muon> > rdwc2;
+
+    RealME0MuonCollection rmuoncol;
+    edm::Wrapper<RealME0MuonCollection> rmcw1;
+    edm::Ref<RealME0MuonCollection> rmcr1;
 
     EmulatedME0SegmentCollection segcol;
     edm::Wrapper<EmulatedME0SegmentCollection> scw1;

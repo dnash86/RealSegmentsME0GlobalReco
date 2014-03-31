@@ -15,15 +15,14 @@
  */
 #include "DataFormats/TrackReco/interface/TrackFwd.h"
 #include "DataFormats/TrackReco/interface/Track.h"
-
-#include <DataFormats/GEMRecHit/interface/ME0SegmentCollection.h>
+#include <DataFormats/MuonReco/interface/EmulatedME0SegmentCollection.h>
 
 namespace reco {
  
   class ME0Muon {
   public:
     ME0Muon();
-    ME0Muon( const TrackRef & t, const ME0Segment & s) { innerTrack_ = t; me0Segment_ = s;}
+    ME0Muon( const TrackRef & t, const EmulatedME0SegmentRef & s) { innerTrack_ = t; me0Segment_ = s;}
     virtual ~ME0Muon(){}     
     
     /// reference to Track reconstructed in the tracker only
@@ -32,10 +31,10 @@ namespace reco {
     /// set reference to Track
     virtual void setInnerTrack( const TrackRef & t ) { innerTrack_ = t; }
     virtual void setTrack( const TrackRef & t ) { setInnerTrack(t); }
-    /// set reference to our new ME0Segment type
-    virtual void setME0Segment( const ME0Segment & s ) { me0Segment_ = s; }
+    /// set reference to our new EmulatedME0Segment type
+    virtual void setEmulatedME0Segment( const EmulatedME0SegmentRef & s ) { me0Segment_ = s; }
 
-    virtual ME0Segment me0segment() const { return me0Segment_; }
+    virtual EmulatedME0SegmentRef me0segment() const { return me0Segment_; }
 
     /// a bunch of useful accessors
     int charge() const { return innerTrack_.get()->charge(); }
@@ -59,7 +58,7 @@ namespace reco {
   private:
     /// reference to Track reconstructed in the tracker only
     TrackRef innerTrack_;
-    ME0Segment me0Segment_;
+    EmulatedME0SegmentRef me0Segment_;
   };
 
 }

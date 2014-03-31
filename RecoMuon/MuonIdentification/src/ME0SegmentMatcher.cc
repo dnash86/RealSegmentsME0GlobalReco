@@ -11,7 +11,7 @@
 #include <DataFormats/Common/interface/Handle.h>
 #include <FWCore/MessageLogger/interface/MessageLogger.h> 
 
-#include <DataFormats/MuonReco/interface/ME0Muon.h>
+#include <DataFormats/MuonReco/interface/RealME0Muon.h>
 
 #include "DataFormats/GeometryVector/interface/GlobalPoint.h"
 
@@ -27,13 +27,13 @@
 
 ME0SegmentMatcher::ME0SegmentMatcher(const edm::ParameterSet& pas) : iev(0){
 	
-  produces<std::vector<reco::ME0Muon> >();  //May have to later change this to something that makes more sense, OwnVector, RefVector, etc
+  produces<std::vector<reco::RealME0Muon> >();  //May have to later change this to something that makes more sense, OwnVector, RefVector, etc
 
-  std::cout<<"HELLO"<<std::endl;
+  //std::cout<<"HELLO"<<std::endl;
 
 }
 
-ME0SegmentMatcher::~ME0SegmentMatcher() {std::cout<<"Desctructor"<<std::endl;}
+ME0SegmentMatcher::~ME0SegmentMatcher() {}
 
 void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
 
@@ -62,8 +62,8 @@ void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
     Handle <TrackCollection > generalTracks;
     ev.getByLabel <TrackCollection> ("generalTracks", generalTracks);
 
-    std::auto_ptr<std::vector<ME0Muon> > oc( new std::vector<ME0Muon> ); 
-    std::vector<ME0Muon> TempStore; 
+    std::auto_ptr<std::vector<RealME0Muon> > oc( new std::vector<RealME0Muon> ); 
+    std::vector<RealME0Muon> TempStore; 
 
     int TrackNumber = 0;
     std::vector<int> TkMuonNumbers, TkIndex, TkToKeep;
@@ -126,10 +126,18 @@ void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
 	//The same goes for the error
 	AlgebraicMatrix thisCov(4,4,0);   
 
+	std::cout<<"    Position = "<<roll->toGlobal(thisSegment->localPosition())<<std::endl;
+	std::cout<<"    Local PosErr = "<<thisSegment->localPositionError()<<std::endl;
+	std::cout<<"    Direction = "<<roll->toGlobal(thisSegment->localDirection())<<std::endl;
+	std::cout<<"    Local DirErr = "<<thisSegment->localDirectionError()<<std::endl;
+	std::cout<<"-------------------------------------"<<std::endl;
 	for (int i = 1; i <=4; i++){
 	  for (int j = 1; j <=4; j++){
 	    thisCov(i,j) = thisSegment->parametersError()(i,j);
+	    std::cout<<"| "<<thisCov(i,j)<<" ";
 	  }
+	  std::cout<<"|"<<std::endl;
+	std::cout<<"-------------------------------------"<<std::endl;
 	}
 
 	//Computing the sigma for the track
@@ -186,13 +194,13 @@ void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
 	}
 
 	if (R_MatchFound && Phi_MatchFound) {
-	  std::cout<<"FOUND ONE"<<std::endl;             
+	  //std::cout<<"FOUND ONE"<<std::endl;             
 	  TrackRef thisTrackRef(generalTracks,TrackNumber);
 	  //ME0SegmentRef thisME0SegmentRef(OurSegments,thisSegment->me0DetId());
-	  //TempStore.push_back(reco::ME0Muon(thisTrackRef,*(&*thisSegment)));
+	  //TempStore.push_back(reco::RealME0Muon(thisTrackRef,*(&*thisSegment)));
 	  
-	  TempStore.push_back(reco::ME0Muon(thisTrackRef,(*thisSegment)));
-	  std::cout<<"Does it fail here?"<<std::endl;             
+	  TempStore.push_back(reco::RealME0Muon(thisTrackRef,(*thisSegment)));
+	  //std::cout<<"Does it fail here?"<<std::endl;             
 	  TkIndex.push_back(TrackNumber);
 	}
       }
@@ -210,7 +218,7 @@ void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
       int ReferenceMuonNumber = TkMuonNumbers[i];          // The muon number of the track, starts at 0 and increments
       double RefDelR = 99999.9, ComparisonIndex = 0;
       int WhichTrackToKeep=-1;
-      for (std::vector<ME0Muon>::const_iterator thisMuon = TempStore.begin();    //Now we have the second nested loop, over the ME0Muons
+      for (std::vector<RealME0Muon>::const_iterator thisMuon = TempStore.begin();    //Now we have the second nested loop, over the RealME0Muons
 	   thisMuon != TempStore.end(); ++thisMuon, ++ComparisonIndex){
 	
 	int thisMuonNumber = TkIndex[ComparisonIndex];    //The track number of the muon we are currently looking at
@@ -245,9 +253,9 @@ void ME0SegmentMatcher::produce(edm::Event& ev, const edm::EventSetup& setup) {
     }
   	
     // put collection in event
-    std::cout<<"Is it fail here?"<<std::endl;             
+    //std::cout<<"Is it fail here?"<<std::endl;             
     ev.put(oc);
-    std::cout<<"What about here?"<<std::endl;             
+    //std::cout<<"What about here?"<<std::endl;             
 }
 
 FreeTrajectoryState

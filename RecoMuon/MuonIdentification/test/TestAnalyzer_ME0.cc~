@@ -42,7 +42,7 @@
 #include "DataFormats/Math/interface/deltaR.h"
 //#include "DataFormats/Math/interface/deltaPhi.h"
 //#include <deltaR.h>
-
+#include <DataFormats/GEMRecHit/interface/ME0SegmentCollection.h>
 
 #include "DataFormats/RecoCandidate/interface/RecoChargedCandidate.h"
 #include "DataFormats/RecoCandidate/interface/RecoChargedCandidateFwd.h"
@@ -115,8 +115,8 @@ void TestAnalyzer_ME0::beginJob()
 
   Mass_h = new TH1F("Mass_h"      , "Mass"   , 100, 0., 200 );
 
-  MuonRecoEff_Eta = new TH1F("MuonRecoEff_Eta"      , "Fraction of gen muons matched to ME0Muons"   ,40, 2.4, 4.0  );
-  MuonRecoEff_Pt = new TH1F("MuonRecoEff_Pt"      , "Fraction of gen muons matched to ME0Muons"   ,8, 0,40  );
+  MuonRecoEff_Eta = new TH1F("MuonRecoEff_Eta"      , "Fraction of ME0Muons matched to gen muons"   ,40, 2.4, 4.0  );
+  MuonRecoEff_Pt = new TH1F("MuonRecoEff_Pt"      , "Fraction of ME0Muons matched to gen muons"   ,8, 0,40  );
 
   MuonAllTracksEff_Eta = new TH1F("MuonAllTracksEff_Eta"      , "All ME0Muons over all tracks"   ,40, 2.4, 4.0  );
   MuonAllTracksEff_Pt = new TH1F("MuonAllTracksEff_Pt"      , "All ME0Muons over all tracks"   ,8, 0,40  );
@@ -381,6 +381,7 @@ void TestAnalyzer_ME0::endJob()
   MuonRecoEff_Pt->Divide(MatchedME0Muon_Pt, GenMuon_Pt, 1, 1, "B");
   MuonRecoEff_Pt->GetXaxis()->SetTitle("Gen Muon p_{T}");
   MuonRecoEff_Pt->GetYaxis()->SetTitle("Matching Efficiency");
+  MuonRecoEff_Pt->SetMinimum(.85);
   MuonRecoEff_Pt->Write();   MuonRecoEff_Pt->Draw();  c1->Print("OutputAnalyzerPngs/MuonRecoEff_Pt.png");
 
   MuonAllTracksEff_Eta->Divide(ME0Muon_Eta, Track_Eta, 1, 1, "B");
